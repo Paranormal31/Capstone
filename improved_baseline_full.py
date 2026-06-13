@@ -18,7 +18,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # ---------- CONFIG ----------
-DATA_GLOB = r"C:\Paranormal\Acad\Sem VII\Capstone\Premiere League CSV\*.csv"
+DATA_GLOB = r"Premiere League CSV\*.csv"
 ROLLING_N = 5
 RANDOM_STATE = 42
 OUTPUT_DIR = "outputs"

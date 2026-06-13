@@ -11,6 +11,7 @@ import joblib
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 import xgboost as xgb
+import matplotlib.pyplot as plt
 
 # ---------------- CONFIG ----------------
 FEATURES_CSV = "outputs/engineered_features.csv"
@@ -126,6 +127,24 @@ print("\n===== FINAL TWO-STAGE MODEL PERFORMANCE =====")
 print("Overall accuracy:", accuracy_score(y_result_test, final_preds))
 print(classification_report(y_result_test, final_preds, digits=4))
 print("Confusion matrix:\n", confusion_matrix(y_result_test, final_preds))
+
+cm = confusion_matrix(y_result_test, final_preds)
+plt.figure(figsize=(6,5))
+plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+plt.title("Two-Stage Model Confusion Matrix")
+plt.colorbar()
+labels = ['Away(0)','Draw(1)','Home(2)']
+plt.xticks(np.arange(len(labels)), labels, rotation=45)
+plt.yticks(np.arange(len(labels)), labels)
+thresh = cm.max() / 2.
+for i, j in np.ndindex(cm.shape):
+    plt.text(j, i, format(cm[i, j], 'd'),
+             horizontalalignment="center",
+             color="white" if cm[i, j] > thresh else "black")
+plt.ylabel('True label'); plt.xlabel('Predicted label')
+plt.tight_layout()
+plt.savefig("outputs/two_stage_confusion_matrix.png")
+print("Saved confusion matrix plot to outputs/two_stage_confusion_matrix.png")
 
 # Save models
 joblib.dump(draw_model, "outputs/draw_detector_model.joblib")

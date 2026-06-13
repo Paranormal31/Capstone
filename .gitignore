@@ -3,5 +3,8 @@ __pycache__/
 *.pyc
 outputs/
 *.rar
+*.zip
 .DS_Store
 .env
+Capstone Docs/
+Study/
